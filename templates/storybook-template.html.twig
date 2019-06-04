@@ -1,0 +1,5 @@
+<h1>Storybook</h1>
+{% for component in variables.components %}
+  {% include "@#{variables.activeTheme}/" ~ component.path with component.data %}
+{% endfor %}
+

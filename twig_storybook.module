@@ -12,6 +12,9 @@ function twig_storybook_theme($themes) {
   $themes = [
     'page__storybook' => [
       'variables' => ['variables' => NULL],
+    ],
+    'storybook_template' => [
+      'variables' => ['variables' => NULL],
     ]
   ];
 
