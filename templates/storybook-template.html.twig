@@ -1,17 +1,20 @@
-<h1>Storybook</h1>
+<div class='storybook-container'>
+  <div class='storybook-navigation'>
+    <h2>Twig Storybook</h2>
+    <ul>
+    {% for component in variables.components|keys %}
+      <li data-target={{ component }}>
+        {{ component }}
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
 
-<ul class='storybook-navigation'>
-{% for component in variables.components|keys %}
-  <li data-target={{ component }}>
-    {{ component }}
-  </li>
-{% endfor %}
-</ul>
-
-<div class='component-wrapper'>
-  {% for name, component in variables.components %}
-    <div class='component' id={{name}}>
-      {% include "@#{variables.activeTheme}/" ~ component.path with component.data %}
-    </div>
-  {% endfor %}
+  <div class='component-wrapper'>
+    {% for name, component in variables.components %}
+      <div class='component' id={{name}}>
+        {% include "@#{variables.activeTheme}/" ~ component.path with component.data %}
+      </div>
+    {% endfor %}
+  </div>
 </div>

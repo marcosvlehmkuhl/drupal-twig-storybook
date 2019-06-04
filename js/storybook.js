@@ -13,8 +13,12 @@
         const $el = $(e.target)
         const id = $el.data('target')
         const $component = $context.find(`.component-wrapper #${id}`)
+
         $components.removeClass('show')
         $component.addClass('show')
+
+        $items.removeClass('active')
+        $el.addClass('active')
       })
     }
   }
