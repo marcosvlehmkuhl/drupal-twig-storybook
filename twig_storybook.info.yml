@@ -1,0 +1,5 @@
+name: Twig Storybook
+type: module
+description: Custom module to handle layouts
+core: 8.x
+package: Contrib

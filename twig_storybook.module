@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Contains module file.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function twig_storybook_theme($themes) {
+  $themes = [
+    'page__storybook' => [
+      'variables' => ['variables' => NULL],
+    ]
+  ];
+
+  return $themes;
+}

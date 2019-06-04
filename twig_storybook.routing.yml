@@ -1,0 +1,7 @@
+twig_storybook.overall:
+  path: /storybook
+  defaults:
+    _controller: '\Drupal\twig_storybook\Controller\Storybook::build'
+
+  requirements:
+    _permission: 'access content'
