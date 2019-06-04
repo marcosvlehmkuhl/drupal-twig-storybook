@@ -1,0 +1,9 @@
+global-styling:
+  version: 1.x
+  css:
+    theme:
+      css/storybook-theme.css: {}
+  js:
+    js/storybook.js: {}
+  dependencies:
+    - core/jquery

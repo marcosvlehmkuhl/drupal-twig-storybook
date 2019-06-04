@@ -20,3 +20,10 @@ function twig_storybook_theme($themes) {
 
   return $themes;
 }
+
+/**
+ * Implements hook_page_attachments().
+ */
+function twig_storybook_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'twig_storybook/global-styling';
+}

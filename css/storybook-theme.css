@@ -1,0 +1,11 @@
+.storybook-page {
+  background-color: white;
+}
+
+.component {
+  display: none;
+}
+
+.show {
+  display: block;
+}
