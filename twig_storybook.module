@@ -15,7 +15,7 @@ function twig_storybook_theme($themes) {
     ],
     'storybook_template' => [
       'variables' => ['variables' => NULL],
-    ]
+    ],
   ];
 
   return $themes;

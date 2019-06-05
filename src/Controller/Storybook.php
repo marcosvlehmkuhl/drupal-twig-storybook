@@ -4,14 +4,16 @@ namespace Drupal\twig_storybook\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\Yaml\Yaml;
-use Drupal\Component\Utility\Random;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 
 /**
- * Controller to render stories
+ * Controller to render stories.
  */
 class Storybook extends ControllerBase {
 
+  /**
+   * Generate content for each story.
+   */
   protected function generateContent($component) {
     $storyManager = \Drupal::service('entity_type.manager')
       ->getStorage('story');
@@ -20,13 +22,13 @@ class Storybook extends ControllerBase {
     $fields = $fieldManager->getFieldStorageDefinitions('story');
     $story = $storyManager->create([]);
 
-    foreach($fields as $field) {
+    foreach ($fields as $field) {
       $max = $cardinality = $field->getCardinality();
       if ($cardinality == FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED) {
-        // Just an arbitrary number for 'unlimited'
+        // Just an arbitrary number for 'unlimited'.
         $max = rand(1, 3);
       }
-      $fieldName  = $field->getName();
+      $fieldName = $field->getName();
       $story->$fieldName->generateSampleItems($max);
     }
 
@@ -39,6 +41,9 @@ class Storybook extends ControllerBase {
     return $component;
   }
 
+  /**
+   * Builds the storybook page.
+   */
   public function build() {
     $themeManager = \Drupal::service('theme.manager');
     $activeTheme = $themeManager->getActiveTheme();
@@ -50,7 +55,7 @@ class Storybook extends ControllerBase {
     $file_contents = file_get_contents($filePath);
     $components = Yaml::parse($file_contents);
 
-    foreach($components as $name => $component) {
+    foreach ($components as $name => $component) {
       $components[$name] = $this->generateContent($component);
     }
 
@@ -58,8 +63,9 @@ class Storybook extends ControllerBase {
       '#theme' => 'storybook_template',
       '#variables' => [
         'activeTheme' => $activeThemeName,
-        'components' => $components
-      ]
+        'components' => $components,
+      ],
     ];
   }
+
 }
