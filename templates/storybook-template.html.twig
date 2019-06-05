@@ -2,9 +2,9 @@
   <div class='storybook-navigation'>
     <h2>Twig Storybook</h2>
     <ul>
-    {% for component in variables.components|keys %}
-      <li data-target={{ component }}>
-        {{ component }}
+    {% for key, component in variables.components %}
+      <li data-target={{ key }}>
+        {{ component.title }}
       </li>
     {% endfor %}
     </ul>
