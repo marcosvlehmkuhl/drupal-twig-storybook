@@ -1,6 +1,6 @@
 {
     "name": "taller/twig-storybook",
-    "description": "Creates and storybook like tool to develop components in twig.",
+    "description": "Creates a storybook like tool to develop components in twig.",
     "type": "drupal-module",
     "license": "GPL-2.0+",
     "minimum-stability": "dev",
