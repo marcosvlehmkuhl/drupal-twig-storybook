@@ -1,0 +1,22 @@
+# Story routing definition
+story.settings_tab:
+  route_name: story.settings
+  title: 'Settings'
+  base_route: story.settings
+
+entity.story.canonical:
+  route_name: entity.story.canonical
+  base_route: entity.story.canonical
+  title: 'View'
+
+entity.story.edit_form:
+  route_name: entity.story.edit_form
+  base_route: entity.story.canonical
+  title: 'Edit'
+
+entity.story.delete_form:
+  route_name:  entity.story.delete_form
+  base_route:  entity.story.canonical
+  title: Delete
+  weight: 10
+

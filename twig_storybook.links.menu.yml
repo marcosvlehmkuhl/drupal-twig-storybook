@@ -1,0 +1,14 @@
+
+# Story menu items definition
+entity.story.collection:
+  title: 'Story list'
+  route_name: entity.story.collection
+  description: 'List Story entities'
+  parent: system.admin_structure
+  weight: 100
+
+story.admin.structure.settings:
+  title: 'Story settings'
+  description: 'Configure Story entities'
+  route_name: story.settings
+  parent: system.admin_structure

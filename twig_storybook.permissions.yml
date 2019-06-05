@@ -1,0 +1,19 @@
+add story entities:
+  title: 'Create new Story entities'
+
+administer story entities:
+  title: 'Administer Story entities'
+  description: 'Allow to access the administration form to configure Story entities.'
+  restrict access: true
+
+delete story entities:
+  title: 'Delete Story entities'
+
+edit story entities:
+  title: 'Edit Story entities'
+
+view published story entities:
+  title: 'View published Story entities'
+
+view unpublished story entities:
+  title: 'View unpublished Story entities'

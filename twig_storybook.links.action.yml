@@ -1,0 +1,5 @@
+entity.story.add_form:
+  route_name: entity.story.add_form
+  title: 'Add Story'
+  appears_on:
+    - entity.story.collection
