@@ -13,40 +13,28 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 class Storybook extends ControllerBase {
 
   protected function generateContent($component) {
-    $entityManagerStorage = \Drupal::service('entity_type.manager')
-      ->getStorage($component['type']);
+    $storyManager = \Drupal::service('entity_type.manager')
+      ->getStorage('story');
+    $fieldManager = \Drupal::service('entity_field.manager');
 
-    $entity = $entityManagerStorage->create([
-      'nid' => NULL,
-      'type' => $component['bundle'],
+    $fields = $fieldManager->getFieldStorageDefinitions('story');
+    $story = $storyManager->create([]);
 
-      // make it configurable
-      'title' => Random::name(),
-      'status' => TRUE,
-    ]);
-
-    $instances = entity_load_multiple_by_properties('field_config',[
-      'entity_type' => $entity->getEntityType()->id(),
-      'bundle' => $entity->bundle()
-    ]);
-
-    foreach ($instances as $instance) {
-      $field_storage = $instance->getFieldStorageDefinition();
-      $max = $cardinality = $field_storage->getCardinality();
+    foreach($fields as $field) {
+      $max = $cardinality = $field->getCardinality();
       if ($cardinality == FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED) {
         // Just an arbitrary number for 'unlimited'
         $max = rand(1, 3);
       }
-      $field_name = $field_storage->getName();
-      $entity->$field_name->generateSampleItems($max);
+      $fieldName  = $field->getName();
+      $story->$fieldName->generateSampleItems($max);
     }
 
-    foreach($component['data'] as $key => $value) {
-      if (!$entity->hasField($value)) {
-        throw new \Exception('Entity has no field');
+    foreach ($component['data'] as $key => $data) {
+      if (in_array($data['value'], array_keys($fields))) {
+        $component['data'][$key] = $story->get($data['value'])->view('default');
       }
-      $component['data'][$key] = $entity->get($value)->view();
-    }
+    };
 
     return $component;
   }
@@ -63,9 +51,7 @@ class Storybook extends ControllerBase {
     $components = Yaml::parse($file_contents);
 
     foreach($components as $name => $component) {
-      if(!empty($component['type'])) {
-        $components[$name] = $this->generateContent($component);
-      }
+      $components[$name] = $this->generateContent($component);
     }
 
     return [
