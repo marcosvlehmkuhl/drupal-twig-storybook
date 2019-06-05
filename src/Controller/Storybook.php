@@ -15,6 +15,44 @@ class Storybook extends ControllerBase {
    * Generate content for each story.
    */
   protected function generateContent($component) {
+    $moduleHanlder = \Drupal::service('module_handler');
+    $entityTypeManager = \Drupal::service('entity_type.manager');
+    $fieldTypePluginManager = \Drupal::service('plugin.manager.field.field_type');
+
+    $entity_type = $entityTypeManager->getStorage('story');
+
+    foreach($fieldTypePluginManager->getUiDefinitions() as $definition) {
+      $field_storage_values = [
+        'field_name' => "field_story_${definition['id']}",
+        'entity_type' => 'story',
+        'type' => $definition['id'],
+      ];
+
+      $field_values = [
+        'field_name' => "field_story_${definition['id']}",
+        'entity_type' => 'story',
+        'bundle' => 'story',
+        'label' => $definition['id'],
+      ];
+
+      // @TODO instead of deleting make a continue on future
+      $field = $entityTypeManager->getStorage('field_storage_config')->load("story.field_story_${definition['id']}");
+      // if (!empty($field)) $field->delete();
+      if (!empty($field)) {
+        continue;
+      };
+
+      try {
+        $entityTypeManager->getStorage('field_storage_config')->create($field_storage_values)->save();
+        $field = $entityTypeManager->getStorage('field_config')->create($field_values);
+        $field->save();
+      }
+      catch (\Exception $e) {
+        dump($e);
+      }
+    }
+
+
     $storyManager = \Drupal::service('entity_type.manager')
       ->getStorage('story');
     $fieldManager = \Drupal::service('entity_field.manager');
@@ -29,16 +67,22 @@ class Storybook extends ControllerBase {
         $max = rand(1, 3);
       }
       $fieldName = $field->getName();
-      $story->$fieldName->generateSampleItems($max);
+      if (!empty($story->fieldName)) $story->$fieldName->generateSampleItems($max);
     }
 
     foreach ($component['data'] as $key => $data) {
-      if (in_array($data['value'], array_keys($fields))) {
-        $component['data'][$key] = $story->get($data['value'])->view('default');
+      $fieldName = "field_story_${data['value']}";
+      dump($story->get($fieldName)->view());
+      die();
+      if (in_array($fieldName, array_keys($fields))) {
+        $component['data'][$key] = $story->get($fieldName)->view('default');
       }
     };
 
-    return $component;
+    dump($component);
+    die();
+
+    // return $component;
   }
 
   /**
