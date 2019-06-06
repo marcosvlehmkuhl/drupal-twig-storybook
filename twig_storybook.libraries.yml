@@ -7,3 +7,4 @@ global-styling:
     js/storybook.js: {}
   dependencies:
     - core/jquery
+    - core/drupal
